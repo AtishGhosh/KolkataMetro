@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'init.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // flutter run -d edge --web-renderer html
 
@@ -7,135 +7,367 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      title: 'Kolkata Metro',
+      home: const Homepage(),
+      theme: ThemeData.light(),
+      themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+class Homepage extends StatefulWidget {
+  const Homepage({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<Homepage> createState() => _HomepageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  final departureController = TextEditingController();
-  final arrivalController = TextEditingController();
-  bool view = false;
-
-  @override
-  Widget build(BuildContext context) {
-    getDistanceGraph(departureCode: 'KNAP', arrivalCode: 'KMUK');
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding:
-                const EdgeInsets.only(left: 16, top: 32, right: 16, bottom: 16),
-            child: TextField(
-              controller: departureController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Departure',
-              ),
+class _HomepageState extends State<Homepage> {
+  AppBar homeAppBar({required BuildContext context}) {
+    AppBar appBar = AppBar(
+      toolbarHeight: 72.0,
+      backgroundColor: Colors.white,
+      centerTitle: true,
+      title: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(
+              right: 5.0,
+            ),
+            child: Image(
+              image: AssetImage('assets/images/root/logo.png'),
+              fit: BoxFit.contain,
+              width: 40.0,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: arrivalController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Arrival',
-              ),
+          Text(
+            'Kolkata Metro',
+            style: GoogleFonts.montserrat().copyWith(
+              color: Colors.black,
+              fontSize: 26.0,
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextButton(
-                onPressed: () {
-                  setState(() {
-                    view = true;
-                  });
-                },
-                child: const Text('Get Route')),
-          ),
-          if (view)
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: LineNumberWidget(
-                departureCode: departureController.text,
-                arrivalCode: arrivalController.text,
-              ),
-            ),
+          )
         ],
       ),
     );
+
+    return appBar;
   }
-}
 
-class LineNumberWidget extends StatelessWidget {
-  const LineNumberWidget({
-    Key? key,
-    required this.departureCode,
-    required this.arrivalCode,
-  }) : super(key: key);
+  Widget getBodyWidgetList({required BuildContext context}) {
+    Widget body = ListView(
+      scrollDirection: Axis.vertical,
+      children: [
+        const Image(
+          image: AssetImage('assets/images/home/metro.png'),
+          fit: BoxFit.cover,
+          height: 240.0,
+        ),
+        Column(
+          children: [
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              margin: const EdgeInsets.only(
+                top: 10.0,
+                bottom: 2.5,
+                left: 10.0,
+                right: 10.0,
+              ),
+              child: InkWell(
+                onTap: () {},
+                borderRadius: BorderRadius.circular(16.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: ListTile(
+                    mouseCursor: SystemMouseCursors.click,
+                    leading: Icon(
+                      Icons.adjust,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                    title: Text(
+                      'Choose Departure Station',
+                      style: GoogleFonts.montserrat().copyWith(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              margin: const EdgeInsets.only(
+                top: 2.5,
+                bottom: 10.0,
+                left: 10.0,
+                right: 10.0,
+              ),
+              child: InkWell(
+                onTap: () {},
+                borderRadius: BorderRadius.circular(16.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: ListTile(
+                    mouseCursor: SystemMouseCursors.click,
+                    leading: Icon(
+                      Icons.brightness_1,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                    title: Text(
+                      'Choose Arrival Station',
+                      style: GoogleFonts.montserrat().copyWith(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            MaterialButton(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  'Get Route and Fare',
+                  style: GoogleFonts.montserrat().copyWith(
+                    fontSize: 18.0,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(36),
+              ),
+              color: Theme.of(context).colorScheme.primary,
+              onPressed: () {},
+              disabledColor: Colors.grey,
+            ),
+          ],
+        ),
+        Container(
+          margin: const EdgeInsets.only(top: 12.0),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24.0),
+              topRight: Radius.circular(24.0),
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GridView.count(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                padding: const EdgeInsets.all(30.0),
+                childAspectRatio: 1,
+                mainAxisSpacing: 30.0,
+                crossAxisSpacing: 30.0,
+                children: [
+                  InkWell(
+                    onTap: () {},
+                    child: GridTile(
+                      footer: Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: 6.0,
+                          left: 10.0,
+                        ),
+                        child: Text(
+                          'Stations',
+                          style: GoogleFonts.montserrat().copyWith(
+                            color: Colors.white,
+                            fontSize: 32.0,
+                          ),
+                        ),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: const DecorationImage(
+                            image: AssetImage(
+                              'assets/images/home/station.png',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.0),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.black.withOpacity(0),
+                                Colors.black.withOpacity(0.8),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: GridTile(
+                      footer: Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: 6.0,
+                          left: 10.0,
+                        ),
+                        child: Text(
+                          'Routes',
+                          style: GoogleFonts.montserrat().copyWith(
+                            color: Colors.white,
+                            fontSize: 32.0,
+                          ),
+                        ),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: const DecorationImage(
+                            image: AssetImage(
+                              'assets/images/home/route.png',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.0),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.black.withOpacity(0),
+                                Colors.black.withOpacity(0.8),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: GridTile(
+                      footer: Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: 6.0,
+                          left: 10.0,
+                        ),
+                        child: Text(
+                          'Timings',
+                          style: GoogleFonts.montserrat().copyWith(
+                            color: Colors.white,
+                            fontSize: 32.0,
+                          ),
+                        ),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: const DecorationImage(
+                            image: AssetImage(
+                              'assets/images/home/timing.png',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.0),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.black.withOpacity(0),
+                                Colors.black.withOpacity(0.8),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: GridTile(
+                      footer: Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: 6.0,
+                          left: 10.0,
+                        ),
+                        child: Text(
+                          'Helplines',
+                          style: GoogleFonts.montserrat().copyWith(
+                            color: Colors.white,
+                            fontSize: 32.0,
+                          ),
+                        ),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: const DecorationImage(
+                            image: AssetImage(
+                              'assets/images/home/helpline.png',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.0),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.black.withOpacity(0),
+                                Colors.black.withOpacity(0.8),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        )
+      ],
+    );
 
-  final String departureCode;
-  final String arrivalCode;
+    return body;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<String>>(
-        future: getDistanceGraph(
-          departureCode: departureCode,
-          arrivalCode: arrivalCode,
-        ),
-        builder: ((context, snapshot) {
-          if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
-          } else if (snapshot.hasData) {
-            return SizedBox(
-              height: 400,
-              child: ListView.builder(
-                itemCount: snapshot.data?.length,
-                itemBuilder: (_, index) {
-                  if (!snapshot.hasData) return const Text('Error: No Data');
-                  return Text(
-                    'Station: ${snapshot.data?[index]}',
-                  );
-                },
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-              ),
-            );
-          } else {
-            return const Text('Loading...');
-          }
-        }));
+    return Scaffold(
+      backgroundColor: Colors.grey[200],
+      appBar: homeAppBar(context: context),
+      body: getBodyWidgetList(context: context),
+    );
   }
 }

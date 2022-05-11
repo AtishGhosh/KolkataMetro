@@ -161,7 +161,6 @@ Future<String> getRouteInformation(
   String lineNumber = getLineNumber(
       data: file, departureCode: departureCode, arrivalCode: arrivalCode);
 
-  print(getLineStationList(data: file, lineNumber: 'Line 1'));
   return ('Departure: $departure\nArrival: $arrival\nDirection: $direction\nLine Number: ${getLineInt(lineNumber: lineNumber)}');
 }
 
@@ -184,8 +183,6 @@ Future<String> getDistanceGraph() async {
       }
     }
   }
-
-  print(stationList.length);
 
   var stationGrid = List.generate(
       stationList.length, (i) => List.filled(stationList.length, 0.0),
@@ -212,8 +209,6 @@ Future<String> getDistanceGraph() async {
         int index1 = stationList.indexWhere((item) => item == cellValue);
         int index2 =
             stationList.indexWhere((item) => item == nextStationCellValue);
-        print(
-            'Station1: $cellValue Index1: $index1\nDistance: $distanceCellValue\nStation2: $nextStationCellValue Index2: $index2\n');
 
         stationGrid[index1][index2] = distanceCellValue;
         stationGrid[index2][index1] = distanceCellValue;
@@ -232,7 +227,6 @@ Future<String> getDistanceGraph() async {
           stationGrid[i][j] = double.infinity;
         }
       }
-      print(stationGrid[i]);
     }
   }
 

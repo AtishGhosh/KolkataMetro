@@ -150,8 +150,7 @@ Future<List<String>> getDistanceGraph(
   }
 
   for (int i = 0; i < stationList.length; i++) {
-    print(
-        '$i : ${stationList[i]} : ${distances[i].toStringAsFixed(3)} : ${closestStations[i]}');
+    // print('$i : ${stationList[i]} : ${distances[i].toStringAsFixed(3)} : ${closestStations[i]}');
   }
 
   List<String> routeStationList = [stationList[arrivalStationIndex]];
