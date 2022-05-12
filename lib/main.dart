@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // flutter run -d edge --web-renderer html
@@ -38,8 +39,9 @@ class _HomepageState extends State<Homepage> {
   AppBar homeAppBar({required BuildContext context}) {
     AppBar appBar = AppBar(
       toolbarHeight: 72.0,
-      backgroundColor: Colors.white,
+      elevation: 0,
       centerTitle: true,
+      backgroundColor: Colors.white,
       title: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -63,6 +65,13 @@ class _HomepageState extends State<Homepage> {
             ),
           )
         ],
+      ),
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        systemNavigationBarColor: Colors.transparent,
+        systemNavigationBarDividerColor: Colors.transparent,
+        statusBarColor: Colors.transparent,
+        systemNavigationBarIconBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.dark,
       ),
     );
 
@@ -178,10 +187,10 @@ class _HomepageState extends State<Homepage> {
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 crossAxisCount: 2,
-                padding: const EdgeInsets.all(30.0),
+                padding: const EdgeInsets.all(28.0),
                 childAspectRatio: 1,
-                mainAxisSpacing: 30.0,
-                crossAxisSpacing: 30.0,
+                mainAxisSpacing: 28.0,
+                crossAxisSpacing: 28.0,
                 children: [
                   InkWell(
                     onTap: () {},
@@ -195,7 +204,7 @@ class _HomepageState extends State<Homepage> {
                           'Stations',
                           style: GoogleFonts.montserrat().copyWith(
                             color: Colors.white,
-                            fontSize: 32.0,
+                            fontSize: 26.0,
                           ),
                         ),
                       ),
@@ -237,7 +246,7 @@ class _HomepageState extends State<Homepage> {
                           'Routes',
                           style: GoogleFonts.montserrat().copyWith(
                             color: Colors.white,
-                            fontSize: 32.0,
+                            fontSize: 26.0,
                           ),
                         ),
                       ),
@@ -279,7 +288,7 @@ class _HomepageState extends State<Homepage> {
                           'Timings',
                           style: GoogleFonts.montserrat().copyWith(
                             color: Colors.white,
-                            fontSize: 32.0,
+                            fontSize: 26.0,
                           ),
                         ),
                       ),
@@ -321,7 +330,7 @@ class _HomepageState extends State<Homepage> {
                           'Helplines',
                           style: GoogleFonts.montserrat().copyWith(
                             color: Colors.white,
-                            fontSize: 32.0,
+                            fontSize: 26.0,
                           ),
                         ),
                       ),
@@ -353,6 +362,204 @@ class _HomepageState extends State<Homepage> {
                   ),
                 ],
               ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 28.0,
+                  right: 28.0,
+                ),
+                child: AspectRatio(
+                  aspectRatio: 2.2,
+                  child: InkWell(
+                    onTap: () {},
+                    child: GridTile(
+                      footer: Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: 6.0,
+                          left: 10.0,
+                        ),
+                        child: Text(
+                          'Metro Map',
+                          style: GoogleFonts.montserrat().copyWith(
+                            color: Colors.white,
+                            fontSize: 26.0,
+                          ),
+                        ),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: const DecorationImage(
+                            image: AssetImage(
+                              'assets/images/home/map.png',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.0),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.black.withOpacity(0),
+                                Colors.black.withOpacity(0.85),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              GridView.count(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                padding: const EdgeInsets.all(28.0),
+                childAspectRatio: 1,
+                mainAxisSpacing: 28.0,
+                crossAxisSpacing: 28.0,
+                children: [
+                  InkWell(
+                    onTap: () {},
+                    child: GridTile(
+                      footer: Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: 6.0,
+                          left: 10.0,
+                        ),
+                        child: Text(
+                          'Cards',
+                          style: GoogleFonts.montserrat().copyWith(
+                            color: Colors.white,
+                            fontSize: 26.0,
+                          ),
+                        ),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: const DecorationImage(
+                            image: AssetImage(
+                              'assets/images/home/card.png',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.0),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.black.withOpacity(0),
+                                Colors.black.withOpacity(0.8),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: GridTile(
+                      footer: Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: 6.0,
+                          left: 10.0,
+                        ),
+                        child: Text(
+                          'Activities',
+                          style: GoogleFonts.montserrat().copyWith(
+                            color: Colors.white,
+                            fontSize: 26.0,
+                          ),
+                        ),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: const DecorationImage(
+                            image: AssetImage(
+                              'assets/images/home/now-in-kolkata.png',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.0),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.black.withOpacity(0),
+                                Colors.black.withOpacity(0.8),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 28.0,
+                  right: 28.0,
+                  bottom: 28.0,
+                ),
+                child: AspectRatio(
+                  aspectRatio: 2.2,
+                  child: InkWell(
+                    onTap: () {},
+                    child: GridTile(
+                      footer: Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: 6.0,
+                          left: 10.0,
+                        ),
+                        child: Text(
+                          'Information',
+                          style: GoogleFonts.montserrat().copyWith(
+                            color: Colors.white,
+                            fontSize: 26.0,
+                          ),
+                        ),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: const DecorationImage(
+                            image: AssetImage(
+                              'assets/images/home/info.png',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.0),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.black.withOpacity(0),
+                                Colors.black.withOpacity(0.85),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         )
@@ -365,8 +572,15 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       backgroundColor: Colors.grey[200],
-      appBar: homeAppBar(context: context),
+      appBar: PreferredSize(
+        preferredSize: Size(
+          MediaQuery.of(context).size.width,
+          72.0,
+        ),
+        child: homeAppBar(context: context),
+      ),
       body: getBodyWidgetList(context: context),
     );
   }
