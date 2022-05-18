@@ -366,6 +366,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
+  zoom_pinch_overlay:
+    dependency: "direct main"
+    description:
+      name: zoom_pinch_overlay
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
 sdks:
   dart: ">=2.16.2 <3.0.0"
   flutter: ">=2.10.0-0"
