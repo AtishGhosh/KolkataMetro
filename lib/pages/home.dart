@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:kolkatametro/pages/helplines.dart';
 import 'package:kolkatametro/pages/map.dart';
+import 'package:kolkatametro/pages/routes.dart';
 
 class HomePageBody extends StatelessWidget {
   const HomePageBody({Key? key}) : super(key: key);
@@ -18,6 +19,8 @@ class HomePageBody extends StatelessWidget {
         Column(
           children: [
             Card(
+              elevation: 0,
+              color: Theme.of(context).backgroundColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16.0),
               ),
@@ -36,7 +39,7 @@ class HomePageBody extends StatelessWidget {
                     mouseCursor: SystemMouseCursors.click,
                     leading: Icon(
                       Icons.adjust,
-                      color: Theme.of(context).colorScheme.secondary,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                     title: const Text(
                       'Choose Departure Station',
@@ -49,6 +52,8 @@ class HomePageBody extends StatelessWidget {
               ),
             ),
             Card(
+              elevation: 0,
+              color: Theme.of(context).backgroundColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16.0),
               ),
@@ -67,7 +72,7 @@ class HomePageBody extends StatelessWidget {
                     mouseCursor: SystemMouseCursors.click,
                     leading: Icon(
                       Icons.brightness_1,
-                      color: Theme.of(context).colorScheme.secondary,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                     title: const Text(
                       'Choose Arrival Station',
@@ -80,6 +85,7 @@ class HomePageBody extends StatelessWidget {
               ),
             ),
             MaterialButton(
+              elevation: 0,
               child: const Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Text(
@@ -102,9 +108,9 @@ class HomePageBody extends StatelessWidget {
         ),
         Container(
           margin: const EdgeInsets.only(top: 12.0),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
+          decoration: BoxDecoration(
+            color: Theme.of(context).backgroundColor,
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(24.0),
               topRight: Radius.circular(24.0),
             ),
@@ -163,48 +169,7 @@ class HomePageBody extends StatelessWidget {
                       ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {},
-                    child: GridTile(
-                      footer: const Padding(
-                        padding: EdgeInsets.only(
-                          bottom: 6.0,
-                          left: 10.0,
-                        ),
-                        child: Text(
-                          'Routes',
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: const DecorationImage(
-                            image: AssetImage(
-                              'assets/images/home/route.png',
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16.0),
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.black.withOpacity(0),
-                                Colors.black.withOpacity(0.8),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  const RoutesButton(),
                   InkWell(
                     onTap: () {},
                     child: GridTile(
@@ -247,106 +212,17 @@ class HomePageBody extends StatelessWidget {
                       ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {},
-                    child: GridTile(
-                      footer: const Padding(
-                        padding: EdgeInsets.only(
-                          bottom: 6.0,
-                          left: 10.0,
-                        ),
-                        child: Text(
-                          'Helplines',
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: const DecorationImage(
-                            image: AssetImage(
-                              'assets/images/home/helpline.png',
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16.0),
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.black.withOpacity(0),
-                                Colors.black.withOpacity(0.8),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  const HelplinesButton(),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(
+              const Padding(
+                padding: EdgeInsets.only(
                   left: 28.0,
                   right: 28.0,
                 ),
                 child: AspectRatio(
                   aspectRatio: 2.2,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MetroMap(),
-                        ),
-                      );
-                    },
-                    child: GridTile(
-                      footer: const Padding(
-                        padding: EdgeInsets.only(
-                          bottom: 6.0,
-                          left: 10.0,
-                        ),
-                        child: Text(
-                          'Metro Map',
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: const DecorationImage(
-                            image: AssetImage(
-                              'assets/images/home/map.png',
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16.0),
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.black.withOpacity(0),
-                                Colors.black.withOpacity(0.85),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  child: MetroMapButton(),
                 ),
               ),
               GridView.count(

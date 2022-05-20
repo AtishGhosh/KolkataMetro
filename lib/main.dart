@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:kolkatametro/pages/home.dart';
+import 'package:kolkatametro/theme.dart';
 
 // flutter run -d edge --web-renderer html
 
@@ -23,10 +22,8 @@ class _MyAppState extends State<MyApp> {
       title: 'Kolkata Metro',
       home: const Homepage(),
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        textTheme: GoogleFonts.montserratTextTheme(),
-        scaffoldBackgroundColor: Colors.grey[200],
-      ),
+      theme: lightThemeData,
+      darkTheme: darkThemeData,
     );
   }
 }
@@ -43,13 +40,14 @@ class _HomepageState extends State<Homepage> {
     AppBar appBar = AppBar(
       elevation: 0,
       centerTitle: true,
-      backgroundColor: Colors.white,
+      toolbarHeight: 62,
+      backgroundColor: Theme.of(context).backgroundColor,
       title: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: const [
-          Padding(
+        children: [
+          const Padding(
             padding: EdgeInsets.only(
               right: 8.0,
             ),
@@ -62,19 +60,13 @@ class _HomepageState extends State<Homepage> {
           Text(
             'Kolkata Metro',
             style: TextStyle(
-              color: Colors.black,
+              color: Theme.of(context).highlightColor,
               fontSize: 26.0,
             ),
           ),
         ],
       ),
-      systemOverlayStyle: const SystemUiOverlayStyle(
-        systemNavigationBarColor: Colors.transparent,
-        systemNavigationBarDividerColor: Colors.transparent,
-        statusBarColor: Colors.transparent,
-        systemNavigationBarIconBrightness: Brightness.dark,
-        statusBarIconBrightness: Brightness.dark,
-      ),
+      systemOverlayStyle: getSystemOverlayStyle(context),
     );
 
     return appBar;
@@ -83,7 +75,6 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: homeAppBar(context: context),
       body: const HomePageBody(),
     );

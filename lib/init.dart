@@ -1,12 +1,12 @@
 import 'package:excel/excel.dart';
 import 'package:flutter/services.dart' show ByteData, rootBundle;
 
-const String assetInfoPath = 'lines/info.xlsx';
+const String assetInfoPath = 'assets/lines/info.xlsx';
 
 int getNumberOfLines({required var data}) => data.tables.length;
 
 String getAssetFilePath({required String lineNumber}) =>
-    'lines/' + lineNumber.replaceAll(' ', '').toLowerCase() + '.xlsx';
+    'assets/lines/' + lineNumber.replaceAll(' ', '').toLowerCase() + '.xlsx';
 
 int minDistancePosition(
     {required List<double> distances, required List<bool> stationSet}) {
