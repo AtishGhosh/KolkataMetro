@@ -140,7 +140,9 @@ class _RouteListState extends State<RouteList> {
                     },
                     borderRadius: BorderRadius.circular(16.0),
                     child: Padding(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(
+                        4.0,
+                      ),
                       child: ListTile(
                         mouseCursor: SystemMouseCursors.click,
                         leading: setListTileIcon(
@@ -153,14 +155,13 @@ class _RouteListState extends State<RouteList> {
                           routeData[index].name,
                           style: TextStyle(
                             color: Theme.of(context).highlightColor,
-                            fontSize: 20.0,
+                            fontSize: 18.0,
                           ),
                         ),
                         subtitle: Text(
                           'Line ${routeData[index].lineNumber}',
                           style: const TextStyle(
                             color: Colors.grey,
-                            fontSize: 16.0,
                           ),
                         ),
                       ),
@@ -220,14 +221,15 @@ class _RoutePageState extends State<RoutePage> {
               widget.routeName,
               style: TextStyle(
                 color: Theme.of(context).highlightColor,
-                fontSize: 20.0,
+                fontSize: 18.0,
               ),
             ),
             Text(
               'Line ${widget.routeNumber}',
-              style: const TextStyle(
-                color: Colors.grey,
-                fontSize: 14.0,
+              style: TextStyle(
+                color: widget.routeColor,
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ],
@@ -285,28 +287,21 @@ class _RoutePageState extends State<RoutePage> {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(
-                        10.0,
+                        4.0,
                       ),
                       child: ListTile(
                         mouseCursor: SystemMouseCursors.click,
-                        leading: setListTileIcon(
-                          icon: Icon(
-                            Icons.brightness_1,
-                            color: widget.routeColor,
-                          ),
-                        ),
                         title: Text(
                           routeList[index].name,
                           style: TextStyle(
                             color: Theme.of(context).highlightColor,
-                            fontSize: 20.0,
+                            fontSize: 18.0,
                           ),
                         ),
                         subtitle: Text(
                           routeList[index].code,
                           style: const TextStyle(
                             color: Colors.grey,
-                            fontSize: 16.0,
                           ),
                         ),
                         trailing: routeList[index].connections.isNotEmpty
