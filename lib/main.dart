@@ -47,8 +47,9 @@ class _HomepageState extends State<Homepage> {
           ),
           child: AppBar(
             centerTitle: true,
-            backgroundColor:
-                Theme.of(context).backgroundColor.withOpacity(0.75),
+            backgroundColor: Theme.of(context).backgroundColor.withOpacity(
+                  0.8,
+                ),
             elevation: 0,
             title: Row(
               mainAxisSize: MainAxisSize.min,

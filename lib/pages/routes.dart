@@ -94,7 +94,7 @@ class _RouteListState extends State<RouteList> {
                   Theme.of(context).backgroundColor.withOpacity(0.75),
               elevation: 0,
               title: Text(
-                'Metro Stations',
+                'Metro Routes',
                 style: TextStyle(
                   color: Theme.of(context).highlightColor,
                   fontSize: 25.0,
@@ -119,8 +119,8 @@ class _RouteListState extends State<RouteList> {
           } else if (snapshot.hasData) {
             List<RouteInfo> routeData = snapshot.data as List<RouteInfo>;
             return ListView.builder(
-              padding: const EdgeInsets.only(
-                top: 72.0,
+              padding: EdgeInsets.only(
+                top: Scaffold.of(context).appBarMaxHeight! + 10,
                 bottom: 10.0,
                 left: 5.0,
                 right: 5.0,
@@ -231,8 +231,9 @@ class _RoutePageState extends State<RoutePage> {
               sigmaY: 10.0,
             ),
             child: AppBar(
-              backgroundColor:
-                  Theme.of(context).backgroundColor.withOpacity(0.75),
+              backgroundColor: Theme.of(context).backgroundColor.withOpacity(
+                    0.8,
+                  ),
               elevation: 0,
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -274,8 +275,8 @@ class _RoutePageState extends State<RoutePage> {
           } else if (snapshot.hasData) {
             List<RouteStation> routeList = snapshot.data as List<RouteStation>;
             return ListView.builder(
-              padding: const EdgeInsets.only(
-                top: 72.0,
+              padding: EdgeInsets.only(
+                top: Scaffold.of(context).appBarMaxHeight! + 10,
                 bottom: 10.0,
                 left: 5.0,
                 right: 5.0,

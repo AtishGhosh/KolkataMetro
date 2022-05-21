@@ -199,8 +199,9 @@ class Helplines extends StatelessWidget {
               sigmaY: 10.0,
             ),
             child: AppBar(
-              backgroundColor:
-                  Theme.of(context).backgroundColor.withOpacity(0.75),
+              backgroundColor: Theme.of(context).backgroundColor.withOpacity(
+                    0.8,
+                  ),
               elevation: 0,
               title: Text(
                 'Helplines',
@@ -216,14 +217,16 @@ class Helplines extends StatelessWidget {
         ),
         preferredSize: const Size.fromHeight(62.0),
       ),
-      body: ListView(
-        padding: const EdgeInsets.only(
-          top: 72.0,
-          bottom: 10.0,
-          left: 5.0,
-          right: 5.0,
-        ),
-        children: getHelplines(),
+      body: Builder(
+        builder: ((context) => ListView(
+              padding: EdgeInsets.only(
+                top: Scaffold.of(context).appBarMaxHeight! + 10,
+                bottom: 10.0,
+                left: 5.0,
+                right: 5.0,
+              ),
+              children: getHelplines(),
+            )),
       ),
     );
   }

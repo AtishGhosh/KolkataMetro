@@ -76,8 +76,9 @@ class MetroMap extends StatelessWidget {
               sigmaY: 10.0,
             ),
             child: AppBar(
-              backgroundColor:
-                  Theme.of(context).backgroundColor.withOpacity(0.75),
+              backgroundColor: Theme.of(context).backgroundColor.withOpacity(
+                    0.8,
+                  ),
               elevation: 0,
               title: Text(
                 'Metro Stations',
@@ -93,15 +94,19 @@ class MetroMap extends StatelessWidget {
         ),
         preferredSize: const Size.fromHeight(62.0),
       ),
-      body: Container(
-        padding: const EdgeInsets.only(top: 62.0),
-        alignment: Alignment.center,
-        child: ZoomOverlay(
-          twoTouchOnly: true,
-          child: Theme.of(context).brightness == Brightness.light
-              ? Image.asset('assets/images/pages/map/map.png')
-              : Image.asset('assets/images/pages/map/map-dark.png'),
-        ),
+      body: Builder(
+        builder: ((context) => Container(
+              padding: EdgeInsets.only(
+                top: Scaffold.of(context).appBarMaxHeight!,
+              ),
+              alignment: Alignment.center,
+              child: ZoomOverlay(
+                twoTouchOnly: true,
+                child: Theme.of(context).brightness == Brightness.light
+                    ? Image.asset('assets/images/pages/map/map.png')
+                    : Image.asset('assets/images/pages/map/map-dark.png'),
+              ),
+            )),
       ),
     );
   }

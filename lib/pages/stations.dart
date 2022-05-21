@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:kolkatametro/info.dart';
+import 'package:kolkatametro/pages/search.dart';
 import 'package:kolkatametro/theme.dart';
 
 class StationsButton extends StatelessWidget {
@@ -89,7 +90,7 @@ class _StationsPageState extends State<StationsPage> {
             ),
             child: AppBar(
               backgroundColor:
-                  Theme.of(context).backgroundColor.withOpacity(0.75),
+                  Theme.of(context).backgroundColor.withOpacity(0.8),
               elevation: 0,
               title: Text(
                 'Metro Stations',
@@ -125,13 +126,17 @@ class _StationsPageState extends State<StationsPage> {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(20.0),
-                      bottomRight: Radius.circular(20.0),
+                      bottomLeft: Radius.circular(
+                        20.0,
+                      ),
+                      bottomRight: Radius.circular(
+                        20.0,
+                      ),
                     ),
                     color: Theme.of(context).backgroundColor,
                   ),
-                  padding: const EdgeInsets.only(
-                    top: 72.0,
+                  padding: EdgeInsets.only(
+                    top: Scaffold.of(context).appBarMaxHeight! + 10,
                     bottom: 25.0,
                     left: 17.5,
                     right: 17.5,
@@ -261,8 +266,8 @@ class _StationsPageState extends State<StationsPage> {
               );
             }
             return ListView(
-              padding: const EdgeInsets.only(
-                bottom: 10.0,
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).padding.bottom + 10,
               ),
               children: routeStationBuild,
             );
@@ -271,6 +276,51 @@ class _StationsPageState extends State<StationsPage> {
             child: CircularProgressIndicator(),
           );
         }),
+      ),
+      extendBody: true,
+      bottomNavigationBar: ClipRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(
+            sigmaX: 10.0,
+            sigmaY: 10.0,
+          ),
+          child: Container(
+            color: Theme.of(context).backgroundColor.withOpacity(0.75),
+            padding: const EdgeInsets.all(
+              7.5,
+            ),
+            child: ListTile(
+              onTap: (() {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SearchStationsPage(),
+                  ),
+                );
+              }),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(
+                    20.0,
+                  ),
+                  topRight: Radius.circular(
+                    20.0,
+                  ),
+                ),
+              ),
+              leading: const Icon(
+                Icons.search,
+                color: Colors.grey,
+              ),
+              title: const Text(
+                'Search Station',
+                style: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
