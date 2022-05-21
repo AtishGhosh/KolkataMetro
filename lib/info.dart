@@ -10,7 +10,7 @@ List<String> routeNames = <String>[
 ];
 
 List<Color?> routeColorCodes = <Color?>[
-  Colors.blue[800],
+  Colors.blue[700],
   Colors.green[700],
 ];
 
@@ -51,11 +51,13 @@ Future<List<RouteInfo>> getRoutes() async {
 class RouteStation {
   String name;
   String code;
+  int lineNumber;
   List<Color?> connections;
   RouteStation({
     required this.name,
     required this.code,
     required this.connections,
+    required this.lineNumber,
   });
 }
 
@@ -91,6 +93,7 @@ Future<List<RouteStation>> getRouteStations({required int routeNumber}) async {
         name: row[1]?.value,
         code: row[0]?.value,
         connections: connections,
+        lineNumber: routeNumber,
       ));
     }
   }
@@ -129,6 +132,7 @@ Future<List<RouteStation>> getStationsList() async {
             name: row[1]?.value,
             code: row[0]?.value,
             connections: connections,
+            lineNumber: int.parse(table.replaceAll(RegExp(r'[^0-9]'), '')),
           ));
         }
       }

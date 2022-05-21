@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:kolkatametro/theme.dart';
 import 'package:zoom_pinch_overlay/zoom_pinch_overlay.dart';
@@ -66,22 +67,35 @@ class MetroMap extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      appBar: AppBar(
-        toolbarHeight: 62,
-        elevation: 0,
-        centerTitle: true,
-        backgroundColor: Theme.of(context).backgroundColor,
-        title: Text(
-          'Metro Map',
-          style: TextStyle(
-            color: Theme.of(context).highlightColor,
-            fontSize: 25.0,
+      extendBodyBehindAppBar: true,
+      appBar: PreferredSize(
+        child: ClipRRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: 10.0,
+              sigmaY: 10.0,
+            ),
+            child: AppBar(
+              backgroundColor:
+                  Theme.of(context).backgroundColor.withOpacity(0.75),
+              elevation: 0,
+              title: Text(
+                'Metro Stations',
+                style: TextStyle(
+                  color: Theme.of(context).highlightColor,
+                  fontSize: 25.0,
+                ),
+              ),
+              leading: getAppBarBackButton(context),
+              systemOverlayStyle: getSystemOverlayStyle(context),
+            ),
           ),
         ),
-        leading: getAppBarBackButton(context),
-        systemOverlayStyle: getSystemOverlayStyle(context),
+        preferredSize: const Size.fromHeight(62.0),
       ),
-      body: Center(
+      body: Container(
+        padding: const EdgeInsets.only(top: 62.0),
+        alignment: Alignment.center,
         child: ZoomOverlay(
           twoTouchOnly: true,
           child: Theme.of(context).brightness == Brightness.light

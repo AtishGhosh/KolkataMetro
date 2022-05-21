@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kolkatametro/theme.dart';
@@ -100,21 +102,19 @@ class Helpline extends StatelessWidget {
             leading: setListTileIcon(
               icon: Icon(
                 iconData,
-                size: 20.0,
               ),
             ),
             title: Text(
               title,
               style: TextStyle(
                 color: Theme.of(context).highlightColor,
-                fontSize: 20.0,
+                fontSize: 16.0,
               ),
             ),
             subtitle: Text(
               subtitle,
               style: const TextStyle(
                 color: Colors.grey,
-                fontSize: 16.0,
               ),
             ),
             trailing: setListTileIcon(
@@ -190,23 +190,35 @@ class Helplines extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        toolbarHeight: 62,
-        backgroundColor: Theme.of(context).backgroundColor,
-        elevation: 0,
-        title: Text(
-          'Helplines',
-          style: TextStyle(
-            color: Theme.of(context).highlightColor,
-            fontSize: 25.0,
+      extendBodyBehindAppBar: true,
+      appBar: PreferredSize(
+        child: ClipRRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: 10.0,
+              sigmaY: 10.0,
+            ),
+            child: AppBar(
+              backgroundColor:
+                  Theme.of(context).backgroundColor.withOpacity(0.75),
+              elevation: 0,
+              title: Text(
+                'Helplines',
+                style: TextStyle(
+                  color: Theme.of(context).highlightColor,
+                  fontSize: 25.0,
+                ),
+              ),
+              leading: getAppBarBackButton(context),
+              systemOverlayStyle: getSystemOverlayStyle(context),
+            ),
           ),
         ),
-        leading: getAppBarBackButton(context),
-        systemOverlayStyle: getSystemOverlayStyle(context),
+        preferredSize: const Size.fromHeight(62.0),
       ),
       body: ListView(
         padding: const EdgeInsets.only(
-          top: 10.0,
+          top: 72.0,
           bottom: 10.0,
           left: 5.0,
           right: 5.0,

@@ -15,7 +15,7 @@ class HomePageBody extends StatelessWidget {
         const Image(
           image: AssetImage('assets/images/home/metro.png'),
           fit: BoxFit.cover,
-          height: 240.0,
+          height: 200.0,
         ),
         Column(
           children: [

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:kolkatametro/info.dart';
 import 'package:kolkatametro/theme.dart';
@@ -79,19 +81,31 @@ class _RouteListState extends State<RouteList> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        toolbarHeight: 62,
-        backgroundColor: Theme.of(context).backgroundColor,
-        elevation: 0,
-        title: Text(
-          'Metro Routes',
-          style: TextStyle(
-            color: Theme.of(context).highlightColor,
-            fontSize: 25.0,
+      extendBodyBehindAppBar: true,
+      appBar: PreferredSize(
+        child: ClipRRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: 10.0,
+              sigmaY: 10.0,
+            ),
+            child: AppBar(
+              backgroundColor:
+                  Theme.of(context).backgroundColor.withOpacity(0.75),
+              elevation: 0,
+              title: Text(
+                'Metro Stations',
+                style: TextStyle(
+                  color: Theme.of(context).highlightColor,
+                  fontSize: 25.0,
+                ),
+              ),
+              leading: getAppBarBackButton(context),
+              systemOverlayStyle: getSystemOverlayStyle(context),
+            ),
           ),
         ),
-        leading: getAppBarBackButton(context),
-        systemOverlayStyle: getSystemOverlayStyle(context),
+        preferredSize: const Size.fromHeight(62.0),
       ),
       body: FutureBuilder(
         future: dataFuture,
@@ -106,7 +120,7 @@ class _RouteListState extends State<RouteList> {
             List<RouteInfo> routeData = snapshot.data as List<RouteInfo>;
             return ListView.builder(
               padding: const EdgeInsets.only(
-                top: 10.0,
+                top: 72.0,
                 bottom: 10.0,
                 left: 5.0,
                 right: 5.0,
@@ -208,34 +222,45 @@ class _RoutePageState extends State<RoutePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        toolbarHeight: 62,
-        backgroundColor: Theme.of(context).backgroundColor,
-        elevation: 0,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              widget.routeName,
-              style: TextStyle(
-                color: Theme.of(context).highlightColor,
-                fontSize: 18.0,
-              ),
+      extendBodyBehindAppBar: true,
+      appBar: PreferredSize(
+        child: ClipRRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: 10.0,
+              sigmaY: 10.0,
             ),
-            Text(
-              'Line ${widget.routeNumber}',
-              style: TextStyle(
-                color: widget.routeColor,
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
+            child: AppBar(
+              backgroundColor:
+                  Theme.of(context).backgroundColor.withOpacity(0.75),
+              elevation: 0,
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    widget.routeName,
+                    style: TextStyle(
+                      color: Theme.of(context).highlightColor,
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  Text(
+                    'Line ${widget.routeNumber}',
+                    style: TextStyle(
+                      color: widget.routeColor,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ],
               ),
+              leading: getAppBarBackButton(context),
+              systemOverlayStyle: getSystemOverlayStyle(context),
             ),
-          ],
+          ),
         ),
-        leading: getAppBarBackButton(context),
-        systemOverlayStyle: getSystemOverlayStyle(context),
+        preferredSize: const Size.fromHeight(62.0),
       ),
       body: FutureBuilder(
         future: dataFuture,
@@ -250,7 +275,7 @@ class _RoutePageState extends State<RoutePage> {
             List<RouteStation> routeList = snapshot.data as List<RouteStation>;
             return ListView.builder(
               padding: const EdgeInsets.only(
-                top: 10.0,
+                top: 72.0,
                 bottom: 10.0,
                 left: 5.0,
                 right: 5.0,

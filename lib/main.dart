@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:kolkatametro/pages/home.dart';
 import 'package:kolkatametro/theme.dart';
@@ -36,37 +37,48 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  AppBar homeAppBar({required BuildContext context}) {
-    AppBar appBar = AppBar(
-      elevation: 0,
-      centerTitle: true,
-      toolbarHeight: 62,
-      backgroundColor: Theme.of(context).backgroundColor,
-      title: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(
-              right: 8.0,
-            ),
-            child: Image(
-              image: AssetImage('assets/images/root/logo.png'),
-              fit: BoxFit.contain,
-              width: 34.0,
-            ),
+  PreferredSizeWidget homeAppBar({required BuildContext context}) {
+    PreferredSizeWidget appBar = PreferredSize(
+      child: ClipRRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(
+            sigmaX: 10.0,
+            sigmaY: 10.0,
           ),
-          Text(
-            'Kolkata Metro',
-            style: TextStyle(
-              color: Theme.of(context).highlightColor,
-              fontSize: 26.0,
+          child: AppBar(
+            centerTitle: true,
+            backgroundColor:
+                Theme.of(context).backgroundColor.withOpacity(0.75),
+            elevation: 0,
+            title: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(
+                    right: 8.0,
+                  ),
+                  child: Image(
+                    image: AssetImage('assets/images/root/logo.png'),
+                    fit: BoxFit.contain,
+                    width: 34.0,
+                  ),
+                ),
+                Text(
+                  'Kolkata Metro',
+                  style: TextStyle(
+                    color: Theme.of(context).highlightColor,
+                    fontSize: 26.0,
+                  ),
+                ),
+              ],
             ),
+            systemOverlayStyle: getSystemOverlayStyle(context),
           ),
-        ],
+        ),
       ),
-      systemOverlayStyle: getSystemOverlayStyle(context),
+      preferredSize: const Size.fromHeight(62.0),
     );
 
     return appBar;
@@ -75,6 +87,7 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: homeAppBar(context: context),
       body: const HomePageBody(),
     );
