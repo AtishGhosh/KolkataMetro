@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kolkatametro/theme.dart';
@@ -190,37 +188,24 @@ class Helplines extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      extendBodyBehindAppBar: true,
-      appBar: PreferredSize(
-        child: ClipRRect(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(
-              sigmaX: 10.0,
-              sigmaY: 10.0,
-            ),
-            child: AppBar(
-              backgroundColor: Theme.of(context).backgroundColor.withOpacity(
-                    0.8,
-                  ),
-              elevation: 0,
-              title: Text(
-                'Helplines',
-                style: TextStyle(
-                  color: Theme.of(context).highlightColor,
-                  fontSize: 25.0,
-                ),
-              ),
-              leading: getAppBarBackButton(context),
-              systemOverlayStyle: getSystemOverlayStyle(context),
-            ),
+      appBar: AppBar(
+        toolbarHeight: 62.0,
+        backgroundColor: Theme.of(context).backgroundColor,
+        elevation: 0,
+        title: Text(
+          'Helplines',
+          style: TextStyle(
+            color: Theme.of(context).highlightColor,
+            fontSize: 25.0,
           ),
         ),
-        preferredSize: const Size.fromHeight(62.0),
+        leading: getAppBarBackButton(context),
+        systemOverlayStyle: getSystemOverlayStyle(context),
       ),
       body: Builder(
         builder: ((context) => ListView(
-              padding: EdgeInsets.only(
-                top: Scaffold.of(context).appBarMaxHeight! + 10,
+              padding: const EdgeInsets.only(
+                top: 10,
                 bottom: 10.0,
                 left: 5.0,
                 right: 5.0,

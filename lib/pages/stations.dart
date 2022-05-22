@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:kolkatametro/info.dart';
 import 'package:kolkatametro/pages/search.dart';
@@ -70,6 +69,7 @@ class StationsPage extends StatefulWidget {
 
 class _StationsPageState extends State<StationsPage> {
   late Future<List<RouteStation>> routeStationListFuture;
+  List<RouteStation> routeStationList = [];
 
   @override
   void initState() {
@@ -80,31 +80,19 @@ class _StationsPageState extends State<StationsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: PreferredSize(
-        child: ClipRRect(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(
-              sigmaX: 10.0,
-              sigmaY: 10.0,
-            ),
-            child: AppBar(
-              backgroundColor:
-                  Theme.of(context).backgroundColor.withOpacity(0.8),
-              elevation: 0,
-              title: Text(
-                'Metro Stations',
-                style: TextStyle(
-                  color: Theme.of(context).highlightColor,
-                  fontSize: 25.0,
-                ),
-              ),
-              leading: getAppBarBackButton(context),
-              systemOverlayStyle: getSystemOverlayStyle(context),
-            ),
+      appBar: AppBar(
+        toolbarHeight: 62.0,
+        backgroundColor: Theme.of(context).backgroundColor,
+        elevation: 0,
+        title: Text(
+          'Metro Stations',
+          style: TextStyle(
+            color: Theme.of(context).highlightColor,
+            fontSize: 25.0,
           ),
         ),
-        preferredSize: const Size.fromHeight(62.0),
+        leading: getAppBarBackButton(context),
+        systemOverlayStyle: getSystemOverlayStyle(context),
       ),
       body: FutureBuilder(
         future: routeStationListFuture,
@@ -116,70 +104,69 @@ class _StationsPageState extends State<StationsPage> {
               ),
             );
           } else if (snapshot.hasData) {
-            List<RouteStation> routeStationList =
-                snapshot.data as List<RouteStation>;
+            routeStationList = snapshot.data as List<RouteStation>;
             // someObjects.sort((a, b) => a.someProperty.compareTo(b.someProperty));
             routeStationList.sort((a, b) => a.name.compareTo(b.name));
             List<Widget> routeStationBuild = <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(
-                        20.0,
-                      ),
-                      bottomRight: Radius.circular(
-                        20.0,
-                      ),
+              Container(
+                margin: const EdgeInsets.only(
+                  bottom: 10.0,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(
+                      20.0,
                     ),
-                    color: Theme.of(context).backgroundColor,
+                    bottomRight: Radius.circular(
+                      20.0,
+                    ),
                   ),
-                  padding: EdgeInsets.only(
-                    top: Scaffold.of(context).appBarMaxHeight! + 10,
-                    bottom: 25.0,
-                    left: 17.5,
-                    right: 17.5,
-                  ),
-                  child: AspectRatio(
-                    aspectRatio: 3,
-                    child: InkWell(
-                      onTap: () {},
-                      child: GridTile(
-                        footer: const Padding(
-                          padding: EdgeInsets.only(
-                            bottom: 6.0,
-                            left: 10.0,
+                  color: Theme.of(context).backgroundColor,
+                ),
+                padding: const EdgeInsets.only(
+                  top: 10,
+                  bottom: 20.0,
+                  left: 17.5,
+                  right: 17.5,
+                ),
+                child: AspectRatio(
+                  aspectRatio: 3,
+                  child: InkWell(
+                    onTap: () {},
+                    child: GridTile(
+                      footer: const Padding(
+                        padding: EdgeInsets.only(
+                          bottom: 6.0,
+                          left: 10.0,
+                        ),
+                        child: Text(
+                          'Find Nearest Station',
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.white,
                           ),
-                          child: Text(
-                            'Find Nearest Station',
-                            style: TextStyle(
-                              fontSize: 24,
-                              color: Colors.white,
+                        ),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: const DecorationImage(
+                            image: AssetImage(
+                              'assets/images/pages/stations/nearest.png',
                             ),
+                            fit: BoxFit.cover,
                           ),
+                          borderRadius: BorderRadius.circular(16.0),
                         ),
                         child: Container(
                           decoration: BoxDecoration(
-                            image: const DecorationImage(
-                              image: AssetImage(
-                                'assets/images/pages/stations/nearest.png',
-                              ),
-                              fit: BoxFit.cover,
-                            ),
                             borderRadius: BorderRadius.circular(16.0),
-                          ),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16.0),
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  Colors.black.withOpacity(0),
-                                  Colors.black.withOpacity(0.85),
-                                ],
-                              ),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.black.withOpacity(0),
+                                Colors.black.withOpacity(0.85),
+                              ],
                             ),
                           ),
                         ),
@@ -212,55 +199,48 @@ class _StationsPageState extends State<StationsPage> {
                 );
               }
               routeStationBuild.add(
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Card(
-                    elevation: 0,
-                    color: Theme.of(context).backgroundColor,
+                Card(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 15.0,
+                    vertical: 5.0,
+                  ),
+                  elevation: 0,
+                  color: Theme.of(context).backgroundColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: ListTile(
+                    onTap: () {},
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    margin: const EdgeInsets.only(
-                      top: 5.0,
-                      bottom: 5.0,
-                      left: 10.0,
-                      right: 10.0,
-                    ),
-                    child: InkWell(
-                      onTap: () {},
-                      borderRadius: BorderRadius.circular(16.0),
-                      child: Padding(
-                        padding: const EdgeInsets.all(
-                          4.0,
-                        ),
-                        child: ListTile(
-                          mouseCursor: SystemMouseCursors.click,
-                          title: Text(
-                            routeStationList[index].name,
-                            style: TextStyle(
-                              color: Theme.of(context).highlightColor,
-                              fontSize: 18.0,
-                            ),
-                          ),
-                          subtitle: Text(
-                            routeStationList[index].code,
-                            style: const TextStyle(
-                              color: Colors.grey,
-                            ),
-                          ),
-                          trailing: routeStationList[index]
-                                  .connections
-                                  .isNotEmpty
-                              ? Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: connectionList,
-                                )
-                              : null,
-                        ),
+                      borderRadius: BorderRadius.circular(
+                        16.0,
                       ),
                     ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 5.0,
+                      horizontal: 20.0,
+                    ),
+                    title: Text(
+                      routeStationList[index].name,
+                      style: TextStyle(
+                        color: Theme.of(context).highlightColor,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                    subtitle: Text(
+                      routeStationList[index].code,
+                      style: const TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    trailing: routeStationList[index].connections.isNotEmpty
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: connectionList,
+                          )
+                        : null,
                   ),
                 ),
               );
@@ -278,46 +258,50 @@ class _StationsPageState extends State<StationsPage> {
         }),
       ),
       extendBody: true,
-      bottomNavigationBar: ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: 10.0,
-            sigmaY: 10.0,
-          ),
-          child: Container(
-            color: Theme.of(context).backgroundColor.withOpacity(0.75),
-            padding: const EdgeInsets.all(
-              7.5,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).backgroundColor,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(
+              20.0,
             ),
-            child: ListTile(
-              onTap: (() {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SearchStationsPage(),
-                  ),
-                );
-              }),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(
-                    20.0,
-                  ),
-                  topRight: Radius.circular(
-                    20.0,
-                  ),
+            topRight: Radius.circular(
+              20.0,
+            ),
+          ),
+        ),
+        padding: const EdgeInsets.all(
+          7.5,
+        ),
+        child: ListTile(
+          onTap: (() {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SearchStationsPage(
+                  searchList: routeStationList,
                 ),
               ),
-              leading: const Icon(
-                Icons.search,
-                color: Colors.grey,
+            );
+          }),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(
+                20.0,
               ),
-              title: const Text(
-                'Search Station',
-                style: TextStyle(
-                  color: Colors.grey,
-                ),
+              topRight: Radius.circular(
+                20.0,
               ),
+            ),
+          ),
+          leading: const Icon(
+            Icons.search,
+            color: Colors.grey,
+          ),
+          title: const Text(
+            'Search Metro Station',
+            style: TextStyle(
+              color: Colors.grey,
             ),
           ),
         ),

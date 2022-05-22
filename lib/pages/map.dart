@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:kolkatametro/theme.dart';
 import 'package:zoom_pinch_overlay/zoom_pinch_overlay.dart';
@@ -67,45 +66,26 @@ class MetroMap extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      extendBodyBehindAppBar: true,
-      appBar: PreferredSize(
-        child: ClipRRect(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(
-              sigmaX: 10.0,
-              sigmaY: 10.0,
-            ),
-            child: AppBar(
-              backgroundColor: Theme.of(context).backgroundColor.withOpacity(
-                    0.8,
-                  ),
-              elevation: 0,
-              title: Text(
-                'Metro Stations',
-                style: TextStyle(
-                  color: Theme.of(context).highlightColor,
-                  fontSize: 25.0,
-                ),
-              ),
-              leading: getAppBarBackButton(context),
-              systemOverlayStyle: getSystemOverlayStyle(context),
-            ),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).backgroundColor,
+        toolbarHeight: 62.0,
+        elevation: 0,
+        title: Text(
+          'Metro Stations',
+          style: TextStyle(
+            color: Theme.of(context).highlightColor,
+            fontSize: 25.0,
           ),
         ),
-        preferredSize: const Size.fromHeight(62.0),
+        leading: getAppBarBackButton(context),
+        systemOverlayStyle: getSystemOverlayStyle(context),
       ),
       body: Builder(
-        builder: ((context) => Container(
-              padding: EdgeInsets.only(
-                top: Scaffold.of(context).appBarMaxHeight!,
-              ),
-              alignment: Alignment.center,
-              child: ZoomOverlay(
-                twoTouchOnly: true,
-                child: Theme.of(context).brightness == Brightness.light
-                    ? Image.asset('assets/images/pages/map/map.png')
-                    : Image.asset('assets/images/pages/map/map-dark.png'),
-              ),
+        builder: ((context) => ZoomOverlay(
+              twoTouchOnly: true,
+              child: Theme.of(context).brightness == Brightness.light
+                  ? Image.asset('assets/images/pages/map/map.png')
+                  : Image.asset('assets/images/pages/map/map-dark.png'),
             )),
       ),
     );
