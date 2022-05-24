@@ -122,45 +122,43 @@ class _RouteListState extends State<RouteList> {
                     left: 10.0,
                     right: 10.0,
                   ),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RoutePage(
-                            routeName: routeData[index].name,
-                            routeNumber: routeData[index].lineNumber,
-                            routeColor: routeData[index].colorCode,
-                          ),
+                  child: ListTile(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RoutePage(
+                          routeName: routeData[index].name,
+                          routeNumber: routeData[index].lineNumber,
+                          routeColor: routeData[index].colorCode,
                         ),
-                      );
-                    },
-                    borderRadius: BorderRadius.circular(16.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(
-                        4.0,
                       ),
-                      child: ListTile(
-                        mouseCursor: SystemMouseCursors.click,
-                        leading: setListTileIcon(
-                          icon: Icon(
-                            Icons.brightness_1,
-                            color: routeData[index].colorCode,
-                          ),
-                        ),
-                        title: Text(
-                          routeData[index].name,
-                          style: TextStyle(
-                            color: Theme.of(context).highlightColor,
-                            fontSize: 18.0,
-                          ),
-                        ),
-                        subtitle: Text(
-                          'Line ${routeData[index].lineNumber}',
-                          style: const TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                      16.0,
+                    )),
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 5.0,
+                      horizontal: 20.0,
+                    ),
+                    mouseCursor: SystemMouseCursors.click,
+                    leading: setListTileIcon(
+                      icon: Icon(
+                        Icons.brightness_1,
+                        color: routeData[index].colorCode,
+                      ),
+                    ),
+                    title: Text(
+                      routeData[index].name,
+                      style: TextStyle(
+                        color: Theme.of(context).highlightColor,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                    subtitle: Text(
+                      'Line ${routeData[index].lineNumber}',
+                      style: const TextStyle(
+                        color: Colors.grey,
                       ),
                     ),
                   ),
@@ -245,11 +243,9 @@ class _RoutePageState extends State<RoutePage> {
           } else if (snapshot.hasData) {
             List<RouteStation> routeList = snapshot.data as List<RouteStation>;
             return ListView.builder(
-              padding: const EdgeInsets.only(
-                top: 10,
-                bottom: 10.0,
-                left: 5.0,
-                right: 5.0,
+              padding: const EdgeInsets.symmetric(
+                vertical: 10.0,
+                horizontal: 5.0,
               ),
               itemCount: routeList.length,
               itemBuilder: (context, index) {
@@ -270,46 +266,43 @@ class _RoutePageState extends State<RoutePage> {
                       16.0,
                     ),
                   ),
-                  margin: const EdgeInsets.only(
-                    top: 5.0,
-                    bottom: 5.0,
-                    left: 10.0,
-                    right: 10.0,
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 5.0,
+                    horizontal: 10.0,
                   ),
-                  child: InkWell(
+                  child: ListTile(
                     onTap: () {},
-                    borderRadius: BorderRadius.circular(
-                      16.0,
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 5.0,
+                      horizontal: 20.0,
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(
-                        4.0,
-                      ),
-                      child: ListTile(
-                        mouseCursor: SystemMouseCursors.click,
-                        title: Text(
-                          routeList[index].name,
-                          style: TextStyle(
-                            color: Theme.of(context).highlightColor,
-                            fontSize: 18.0,
-                          ),
-                        ),
-                        subtitle: Text(
-                          routeList[index].code,
-                          style: const TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                        trailing: routeList[index].connections.isNotEmpty
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: connectionList,
-                              )
-                            : null,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        16.0,
                       ),
                     ),
+                    mouseCursor: SystemMouseCursors.click,
+                    title: Text(
+                      routeList[index].name,
+                      style: TextStyle(
+                        color: Theme.of(context).highlightColor,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                    subtitle: Text(
+                      routeList[index].code,
+                      style: const TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    trailing: routeList[index].connections.isNotEmpty
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: connectionList,
+                          )
+                        : null,
                   ),
                 );
               },

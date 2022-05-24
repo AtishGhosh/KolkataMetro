@@ -9,14 +9,12 @@ class HelplinesButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const Helplines(),
-          ),
-        );
-      },
+      onTap: (() => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const Helplines(),
+            ),
+          )),
       child: GridTile(
         footer: const Padding(
           padding: EdgeInsets.only(
@@ -82,45 +80,44 @@ class Helpline extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
-      margin: const EdgeInsets.only(
-        top: 5.0,
-        bottom: 5.0,
-        left: 10.0,
-        right: 10.0,
+      margin: const EdgeInsets.symmetric(
+        vertical: 5.0,
+        horizontal: 10.0,
       ),
-      child: InkWell(
-        onTap: () {
-          launchUrl(Uri.parse(url));
-        },
-        borderRadius: BorderRadius.circular(16.0),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: ListTile(
-            mouseCursor: SystemMouseCursors.click,
-            leading: setListTileIcon(
-              icon: Icon(
-                iconData,
-              ),
-            ),
-            title: Text(
-              title,
-              style: TextStyle(
-                color: Theme.of(context).highlightColor,
-                fontSize: 16.0,
-              ),
-            ),
-            subtitle: Text(
-              subtitle,
-              style: const TextStyle(
-                color: Colors.grey,
-              ),
-            ),
-            trailing: setListTileIcon(
-              icon: const Icon(
-                Icons.call,
-                color: Colors.green,
-              ),
-            ),
+      child: ListTile(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            16.0,
+          ),
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 5.0,
+          horizontal: 20.0,
+        ),
+        onTap: () => launchUrl(Uri.parse(url)),
+        mouseCursor: SystemMouseCursors.click,
+        leading: setListTileIcon(
+          icon: Icon(
+            iconData,
+          ),
+        ),
+        title: Text(
+          title,
+          style: TextStyle(
+            color: Theme.of(context).highlightColor,
+            fontSize: 18.0,
+          ),
+        ),
+        subtitle: Text(
+          subtitle,
+          style: const TextStyle(
+            color: Colors.grey,
+          ),
+        ),
+        trailing: setListTileIcon(
+          icon: const Icon(
+            Icons.call,
+            color: Colors.green,
           ),
         ),
       ),
@@ -204,11 +201,9 @@ class Helplines extends StatelessWidget {
       ),
       body: Builder(
         builder: ((context) => ListView(
-              padding: const EdgeInsets.only(
-                top: 10,
-                bottom: 10.0,
-                left: 5.0,
-                right: 5.0,
+              padding: const EdgeInsets.symmetric(
+                vertical: 10.0,
+                horizontal: 5.0,
               ),
               children: getHelplines(),
             )),

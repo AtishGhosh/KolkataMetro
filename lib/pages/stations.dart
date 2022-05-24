@@ -302,6 +302,7 @@ class _StationsPageState extends State<StationsPage> {
             'Search Metro Station',
             style: TextStyle(
               color: Colors.grey,
+              fontSize: 18.0,
             ),
           ),
         ),

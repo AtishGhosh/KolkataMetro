@@ -74,6 +74,7 @@ flutter:
     - assets/images/pages/map/
     - assets/images/pages/helplines/
     - assets/images/pages/stations/
+    - assets/images/pages/information/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

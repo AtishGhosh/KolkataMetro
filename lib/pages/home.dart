@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kolkatametro/pages/helplines.dart';
+import 'package:kolkatametro/pages/information.dart';
 import 'package:kolkatametro/pages/map.dart';
 import 'package:kolkatametro/pages/routes.dart';
 import 'package:kolkatametro/pages/stations.dart';
@@ -280,58 +281,7 @@ class HomePageBody extends StatelessWidget {
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 28.0,
-                  right: 28.0,
-                  bottom: 28.0,
-                ),
-                child: AspectRatio(
-                  aspectRatio: 2.2,
-                  child: InkWell(
-                    onTap: () {},
-                    child: GridTile(
-                      footer: const Padding(
-                        padding: EdgeInsets.only(
-                          bottom: 6.0,
-                          left: 10.0,
-                        ),
-                        child: Text(
-                          'Information',
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: const DecorationImage(
-                            image: AssetImage(
-                              'assets/images/home/info.png',
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16.0),
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.black.withOpacity(0),
-                                Colors.black.withOpacity(0.85),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              const InformationButton(),
             ],
           ),
         )

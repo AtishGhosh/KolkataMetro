@@ -133,16 +133,15 @@ class _SearchStationsPageState extends State<SearchStationsPage> {
                   16.0,
                 ),
               ),
-              contentPadding: const EdgeInsets.only(
-                top: 5.0,
-                bottom: 5.0,
-                left: 20.0,
-                right: 20.0,
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 5.0,
+                horizontal: 20.0,
               ),
               title: Text(
                 station.name,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 18.0,
+                  color: Theme.of(context).highlightColor,
                 ),
               ),
               subtitle: Text(
