@@ -68,13 +68,12 @@ class StationsPage extends StatefulWidget {
 }
 
 class _StationsPageState extends State<StationsPage> {
-  late Future<List<RouteStation>> routeStationListFuture;
   List<RouteStation> routeStationList = [];
 
   @override
   void initState() {
     super.initState();
-    routeStationListFuture = getStationsList();
+    routeStationList = getStationsList();
   }
 
   @override
@@ -94,18 +93,9 @@ class _StationsPageState extends State<StationsPage> {
         leading: getAppBarBackButton(context),
         systemOverlayStyle: getSystemOverlayStyle(context),
       ),
-      body: FutureBuilder(
-        future: routeStationListFuture,
-        builder: ((context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                'Error: ${snapshot.error}',
-              ),
-            );
-          } else if (snapshot.hasData) {
-            routeStationList = snapshot.data as List<RouteStation>;
-            // someObjects.sort((a, b) => a.someProperty.compareTo(b.someProperty));
+      body: Builder(
+        builder: ((context) {
+          {
             routeStationList.sort((a, b) => a.name.compareTo(b.name));
             List<Widget> routeStationBuild = <Widget>[
               Container(
@@ -252,9 +242,6 @@ class _StationsPageState extends State<StationsPage> {
               children: routeStationBuild,
             );
           }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
         }),
       ),
       extendBody: true,

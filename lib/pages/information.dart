@@ -54,7 +54,7 @@ class InformationButton extends StatelessWidget {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Colors.black.withOpacity(0),
+                      Colors.black.withOpacity(0.1),
                       Colors.black.withOpacity(0.85),
                     ],
                   ),
@@ -143,7 +143,7 @@ class InformationPage extends StatelessWidget {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              Colors.black.withOpacity(0),
+                              Colors.black.withOpacity(0.1),
                               Colors.black.withOpacity(0.85),
                             ],
                           ),
@@ -185,7 +185,7 @@ class InformationPage extends StatelessWidget {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              Colors.black.withOpacity(0),
+                              Colors.black.withOpacity(0.1),
                               Colors.black.withOpacity(0.85),
                             ],
                           ),
@@ -253,7 +253,7 @@ class InformationPage extends StatelessWidget {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            Colors.black.withOpacity(0),
+                            Colors.black.withOpacity(0.1),
                             Colors.black.withOpacity(0.85),
                           ],
                         ),
@@ -284,7 +284,9 @@ class InformationPage extends StatelessWidget {
                 vertical: 5.0,
                 horizontal: 20.0,
               ),
-              onTap: (() {}),
+              onTap: (() {
+                showThemeDialog(context: context);
+              }),
               mouseCursor: SystemMouseCursors.click,
               leading: setListTileIcon(
                 icon: const Icon(
@@ -292,7 +294,7 @@ class InformationPage extends StatelessWidget {
                 ),
               ),
               title: Text(
-                'Dark Mode Setting',
+                'Theme Settings',
                 style: TextStyle(
                   color: Theme.of(context).highlightColor,
                   fontSize: 16.0,

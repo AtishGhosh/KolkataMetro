@@ -14,6 +14,15 @@ List<Color?> routeColorCodes = <Color?>[
   Colors.green[700],
 ];
 
+late Excel excelData;
+
+Future<void> initData() async {
+  ByteData data = await rootBundle.load(assetInfoPath);
+  var lineInfo =
+      data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+  excelData = Excel.decodeBytes(lineInfo);
+}
+
 class RouteInfo {
   String name;
   int lineNumber;
@@ -25,11 +34,8 @@ class RouteInfo {
   });
 }
 
-Future<List<RouteInfo>> getRoutes() async {
-  ByteData data = await rootBundle.load(assetInfoPath);
-  var lineInfo =
-      data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-  var file = Excel.decodeBytes(lineInfo);
+List<RouteInfo> getRoutes() {
+  var file = excelData;
 
   List<RouteInfo> routeList = [];
 
@@ -61,11 +67,8 @@ class RouteStation {
   });
 }
 
-Future<List<RouteStation>> getRouteStations({required int routeNumber}) async {
-  ByteData data = await rootBundle.load(assetInfoPath);
-  var lineInfo =
-      data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-  var file = Excel.decodeBytes(lineInfo);
+List<RouteStation> getRouteStations({required int routeNumber}) {
+  var file = excelData;
 
   List<RouteStation> stationList = [];
 
@@ -101,11 +104,8 @@ Future<List<RouteStation>> getRouteStations({required int routeNumber}) async {
   return stationList;
 }
 
-Future<List<RouteStation>> getStationsList() async {
-  ByteData data = await rootBundle.load(assetInfoPath);
-  var lineInfo =
-      data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-  var file = Excel.decodeBytes(lineInfo);
+List<RouteStation> getStationsList() {
+  var file = excelData;
 
   List<RouteStation> stationList = <RouteStation>[];
 

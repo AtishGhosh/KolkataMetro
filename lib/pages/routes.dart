@@ -67,12 +67,12 @@ class RouteList extends StatefulWidget {
 }
 
 class _RouteListState extends State<RouteList> {
-  late Future<List<RouteInfo>> dataFuture;
+  late List<RouteInfo> routeData;
 
   @override
   void initState() {
     super.initState();
-    dataFuture = getRoutes();
+    routeData = getRoutes();
   }
 
   @override
@@ -92,84 +92,67 @@ class _RouteListState extends State<RouteList> {
         leading: getAppBarBackButton(context),
         systemOverlayStyle: getSystemOverlayStyle(context),
       ),
-      body: FutureBuilder(
-        future: dataFuture,
-        builder: ((context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                'Error: ${snapshot.error}',
+      body: ListView.builder(
+        padding: const EdgeInsets.symmetric(
+          vertical: 10,
+          horizontal: 5,
+        ),
+        itemCount: routeData.length,
+        itemBuilder: (context, index) {
+          return Card(
+            elevation: 0,
+            color: Theme.of(context).backgroundColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            margin: const EdgeInsets.only(
+              top: 5.0,
+              bottom: 5.0,
+              left: 10.0,
+              right: 10.0,
+            ),
+            child: ListTile(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RoutePage(
+                    routeName: routeData[index].name,
+                    routeNumber: routeData[index].lineNumber,
+                    routeColor: routeData[index].colorCode,
+                  ),
+                ),
               ),
-            );
-          } else if (snapshot.hasData) {
-            List<RouteInfo> routeData = snapshot.data as List<RouteInfo>;
-            return ListView.builder(
-              padding: const EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 5,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                16.0,
+              )),
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 5.0,
+                horizontal: 20.0,
               ),
-              itemCount: routeData.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  elevation: 0,
-                  color: Theme.of(context).backgroundColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  margin: const EdgeInsets.only(
-                    top: 5.0,
-                    bottom: 5.0,
-                    left: 10.0,
-                    right: 10.0,
-                  ),
-                  child: ListTile(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RoutePage(
-                          routeName: routeData[index].name,
-                          routeNumber: routeData[index].lineNumber,
-                          routeColor: routeData[index].colorCode,
-                        ),
-                      ),
-                    ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                      16.0,
-                    )),
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 5.0,
-                      horizontal: 20.0,
-                    ),
-                    mouseCursor: SystemMouseCursors.click,
-                    leading: setListTileIcon(
-                      icon: Icon(
-                        Icons.brightness_1,
-                        color: routeData[index].colorCode,
-                      ),
-                    ),
-                    title: Text(
-                      routeData[index].name,
-                      style: TextStyle(
-                        color: Theme.of(context).highlightColor,
-                        fontSize: 18.0,
-                      ),
-                    ),
-                    subtitle: Text(
-                      'Line ${routeData[index].lineNumber}',
-                      style: const TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                );
-              },
-            );
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
+              mouseCursor: SystemMouseCursors.click,
+              leading: setListTileIcon(
+                icon: Icon(
+                  Icons.brightness_1,
+                  color: routeData[index].colorCode,
+                ),
+              ),
+              title: Text(
+                routeData[index].name,
+                style: TextStyle(
+                  color: Theme.of(context).highlightColor,
+                  fontSize: 18.0,
+                ),
+              ),
+              subtitle: Text(
+                'Line ${routeData[index].lineNumber}',
+                style: const TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+            ),
           );
-        }),
+        },
       ),
     );
   }
@@ -191,12 +174,12 @@ class RoutePage extends StatefulWidget {
 }
 
 class _RoutePageState extends State<RoutePage> {
-  late Future<List<RouteStation>> dataFuture;
+  late List<RouteStation> routeList;
 
   @override
   void initState() {
     super.initState();
-    dataFuture = getRouteStations(routeNumber: widget.routeNumber);
+    routeList = getRouteStations(routeNumber: widget.routeNumber);
   }
 
   @override
@@ -231,87 +214,70 @@ class _RoutePageState extends State<RoutePage> {
         leading: getAppBarBackButton(context),
         systemOverlayStyle: getSystemOverlayStyle(context),
       ),
-      body: FutureBuilder(
-        future: dataFuture,
-        builder: ((context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                'Error: ${snapshot.error}',
+      body: ListView.builder(
+        padding: const EdgeInsets.symmetric(
+          vertical: 10.0,
+          horizontal: 5.0,
+        ),
+        itemCount: routeList.length,
+        itemBuilder: (context, index) {
+          List<Icon> connectionList = <Icon>[];
+          for (Color? connectionColor in routeList[index].connections) {
+            connectionList.add(
+              Icon(
+                Icons.brightness_1,
+                color: connectionColor,
               ),
-            );
-          } else if (snapshot.hasData) {
-            List<RouteStation> routeList = snapshot.data as List<RouteStation>;
-            return ListView.builder(
-              padding: const EdgeInsets.symmetric(
-                vertical: 10.0,
-                horizontal: 5.0,
-              ),
-              itemCount: routeList.length,
-              itemBuilder: (context, index) {
-                List<Icon> connectionList = <Icon>[];
-                for (Color? connectionColor in routeList[index].connections) {
-                  connectionList.add(
-                    Icon(
-                      Icons.brightness_1,
-                      color: connectionColor,
-                    ),
-                  );
-                }
-                return Card(
-                  elevation: 0,
-                  color: Theme.of(context).backgroundColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      16.0,
-                    ),
-                  ),
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 5.0,
-                    horizontal: 10.0,
-                  ),
-                  child: ListTile(
-                    onTap: () {},
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 5.0,
-                      horizontal: 20.0,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        16.0,
-                      ),
-                    ),
-                    mouseCursor: SystemMouseCursors.click,
-                    title: Text(
-                      routeList[index].name,
-                      style: TextStyle(
-                        color: Theme.of(context).highlightColor,
-                        fontSize: 18.0,
-                      ),
-                    ),
-                    subtitle: Text(
-                      routeList[index].code,
-                      style: const TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                    trailing: routeList[index].connections.isNotEmpty
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: connectionList,
-                          )
-                        : null,
-                  ),
-                );
-              },
             );
           }
-          return const Center(
-            child: CircularProgressIndicator(),
+          return Card(
+            elevation: 0,
+            color: Theme.of(context).backgroundColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                16.0,
+              ),
+            ),
+            margin: const EdgeInsets.symmetric(
+              vertical: 5.0,
+              horizontal: 10.0,
+            ),
+            child: ListTile(
+              onTap: () {},
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 5.0,
+                horizontal: 20.0,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                  16.0,
+                ),
+              ),
+              mouseCursor: SystemMouseCursors.click,
+              title: Text(
+                routeList[index].name,
+                style: TextStyle(
+                  color: Theme.of(context).highlightColor,
+                  fontSize: 18.0,
+                ),
+              ),
+              subtitle: Text(
+                routeList[index].code,
+                style: const TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+              trailing: routeList[index].connections.isNotEmpty
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: connectionList,
+                    )
+                  : null,
+            ),
           );
-        }),
+        },
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kolkatametro/info.dart';
 import 'package:kolkatametro/pages/home.dart';
 import 'package:kolkatametro/theme.dart';
 
@@ -17,13 +18,25 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Kolkata Metro',
-      home: const Homepage(),
-      debugShowCheckedModeBanner: false,
-      theme: lightThemeData,
-      darkTheme: darkThemeData,
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: systemThemeMode,
+      builder: ((context, value, _) {
+        return MaterialApp(
+          title: 'Kolkata Metro',
+          home: const Homepage(),
+          debugShowCheckedModeBanner: false,
+          themeMode: value,
+          theme: lightThemeData,
+          darkTheme: darkThemeData,
+        );
+      }),
     );
   }
 }

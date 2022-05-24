@@ -62,3 +62,165 @@ ThemeData darkThemeData = ThemeData(
     },
   ),
 );
+
+final ValueNotifier<ThemeMode> systemThemeMode =
+    ValueNotifier<ThemeMode>(ThemeMode.system);
+
+Future<void> showThemeDialog({required BuildContext context}) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            20.0,
+          ),
+        ),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        title: Text(
+          'Set Theme Setting',
+          style: TextStyle(
+            color: Theme.of(context).highlightColor,
+          ),
+        ),
+        content: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Card(
+              elevation: 0,
+              color: Theme.of(context).backgroundColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              margin: const EdgeInsets.symmetric(
+                vertical: 5.0,
+              ),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    16.0,
+                  ),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 5.0,
+                  horizontal: 20.0,
+                ),
+                onTap: (() {
+                  systemThemeMode.value = ThemeMode.system;
+                }),
+                mouseCursor: SystemMouseCursors.click,
+                leading: setListTileIcon(
+                  icon: const Icon(
+                    Icons.brightness_auto,
+                  ),
+                ),
+                title: Text(
+                  'System',
+                  style: TextStyle(
+                    color: Theme.of(context).highlightColor,
+                    fontSize: 18.0,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.check_circle,
+                  color: systemThemeMode.value == ThemeMode.system
+                      ? Colors.green
+                      : Colors.transparent,
+                ),
+              ),
+            ),
+            Card(
+              elevation: 0,
+              color: Theme.of(context).backgroundColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              margin: const EdgeInsets.symmetric(
+                vertical: 5.0,
+              ),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    16.0,
+                  ),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 5.0,
+                  horizontal: 20.0,
+                ),
+                onTap: (() {
+                  systemThemeMode.value = ThemeMode.light;
+                }),
+                mouseCursor: SystemMouseCursors.click,
+                leading: setListTileIcon(
+                  icon: const Icon(
+                    Icons.brightness_high,
+                  ),
+                ),
+                title: Text(
+                  'Light',
+                  style: TextStyle(
+                    color: Theme.of(context).highlightColor,
+                    fontSize: 18.0,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.check_circle,
+                  color: systemThemeMode.value == ThemeMode.light
+                      ? Colors.green
+                      : Colors.transparent,
+                ),
+              ),
+            ),
+            Card(
+              elevation: 0,
+              color: Theme.of(context).backgroundColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              margin: const EdgeInsets.symmetric(
+                vertical: 5.0,
+              ),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    16.0,
+                  ),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 5.0,
+                  horizontal: 20.0,
+                ),
+                onTap: (() {
+                  systemThemeMode.value = ThemeMode.dark;
+                }),
+                mouseCursor: SystemMouseCursors.click,
+                leading: setListTileIcon(
+                  icon: const Icon(
+                    Icons.brightness_high,
+                  ),
+                ),
+                title: Text(
+                  'Dark',
+                  style: TextStyle(
+                    color: Theme.of(context).highlightColor,
+                    fontSize: 18.0,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.check_circle,
+                  color: systemThemeMode.value == ThemeMode.dark
+                      ? Colors.green
+                      : Colors.transparent,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
