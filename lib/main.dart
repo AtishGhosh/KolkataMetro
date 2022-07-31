@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kolkatametro/info.dart';
 import 'package:kolkatametro/pages/home.dart';
 import 'package:kolkatametro/theme.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 
 // flutter run -d edge --web-renderer html
 
@@ -21,6 +22,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initData();
+    initTheme();
   }
 
   @override
@@ -28,14 +30,30 @@ class _MyAppState extends State<MyApp> {
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: systemThemeMode,
       builder: ((context, value, _) {
-        return MaterialApp(
-          title: 'Kolkata Metro',
-          home: const Homepage(),
-          debugShowCheckedModeBanner: false,
-          themeMode: value,
-          theme: lightThemeData,
-          darkTheme: darkThemeData,
-        );
+        return DynamicColorBuilder(builder: ((
+          ColorScheme? lightColorScheme,
+          ColorScheme? darkColorScheme,
+        ) {
+          if (lightColorScheme == null || darkColorScheme == null) {
+            return MaterialApp(
+              title: 'Kolkata Metro',
+              home: const Homepage(),
+              debugShowCheckedModeBanner: false,
+              themeMode: value,
+              theme: lightThemeData,
+              darkTheme: darkThemeData,
+            );
+          } else {
+            return MaterialApp(
+              title: 'Kolkata Metro',
+              home: const Homepage(),
+              debugShowCheckedModeBanner: false,
+              themeMode: value,
+              theme: lightThemeData.copyWith(colorScheme: lightColorScheme),
+              darkTheme: darkThemeData.copyWith(colorScheme: darkColorScheme),
+            );
+          }
+        }));
       }),
     );
   }
@@ -51,7 +69,6 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   AppBar homeAppBar({required BuildContext context}) {
     AppBar appBar = AppBar(
-      toolbarHeight: 62.0,
       centerTitle: true,
       backgroundColor: Theme.of(context).backgroundColor,
       elevation: 0,

@@ -149,9 +149,9 @@ Future<List<String>> getDistanceGraph(
     return ['Error: No Route Found'];
   }
 
-  for (int i = 0; i < stationList.length; i++) {
-    // print('$i : ${stationList[i]} : ${distances[i].toStringAsFixed(3)} : ${closestStations[i]}');
-  }
+  // for (int i = 0; i < stationList.length; i++) {
+  //   // print('$i : ${stationList[i]} : ${distances[i].toStringAsFixed(3)} : ${closestStations[i]}');
+  // }
 
   List<String> routeStationList = [stationList[arrivalStationIndex]];
 

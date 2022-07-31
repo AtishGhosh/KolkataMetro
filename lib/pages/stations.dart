@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kolkatametro/info.dart';
 import 'package:kolkatametro/pages/search.dart';
+import 'package:kolkatametro/pages/stationinfo.dart';
 import 'package:kolkatametro/theme.dart';
 
 class StationsButton extends StatelessWidget {
@@ -9,14 +10,12 @@ class StationsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const StationsPage(),
-          ),
-        );
-      },
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const StationsPage(),
+        ),
+      ),
       child: GridTile(
         footer: const Padding(
           padding: EdgeInsets.only(
@@ -80,7 +79,6 @@ class _StationsPageState extends State<StationsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 62.0,
         backgroundColor: Theme.of(context).backgroundColor,
         elevation: 0,
         title: Text(
@@ -116,8 +114,8 @@ class _StationsPageState extends State<StationsPage> {
                 padding: const EdgeInsets.only(
                   top: 10,
                   bottom: 20.0,
-                  left: 17.5,
-                  right: 17.5,
+                  left: 20,
+                  right: 20,
                 ),
                 child: AspectRatio(
                   aspectRatio: 3,
@@ -200,14 +198,23 @@ class _StationsPageState extends State<StationsPage> {
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                   child: ListTile(
-                    onTap: () {},
+                    onTap: (() => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => StationInformation(
+                              routeStation: getStationInformation(
+                                stationCode: routeStationList[index].code,
+                              ),
+                            ),
+                          ),
+                        )),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
                         16.0,
                       ),
                     ),
                     contentPadding: const EdgeInsets.symmetric(
-                      vertical: 5.0,
+                      vertical: 10.0,
                       horizontal: 20.0,
                     ),
                     title: Text(

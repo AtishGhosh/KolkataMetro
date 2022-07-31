@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:kolkatametro/info.dart';
+import 'package:kolkatametro/pages/cards.dart';
 import 'package:kolkatametro/pages/helplines.dart';
 import 'package:kolkatametro/pages/information.dart';
 import 'package:kolkatametro/pages/map.dart';
 import 'package:kolkatametro/pages/routes.dart';
+import 'package:kolkatametro/pages/search.dart';
 import 'package:kolkatametro/pages/stations.dart';
+import 'package:kolkatametro/pages/activities.dart';
+import 'package:kolkatametro/pages/timings.dart';
 
-class HomePageBody extends StatelessWidget {
+class HomePageBody extends StatefulWidget {
   const HomePageBody({Key? key}) : super(key: key);
+
+  @override
+  State<HomePageBody> createState() => _HomePageBodyState();
+}
+
+class _HomePageBodyState extends State<HomePageBody> {
+  RouteStation? departureRouteStation;
+  RouteStation? arrivalRouteStation;
 
   @override
   Widget build(BuildContext context) {
@@ -33,22 +46,46 @@ class HomePageBody extends StatelessWidget {
                 right: 10.0,
               ),
               child: InkWell(
-                onTap: () {},
+                onTap: (() async {
+                  RouteStation selectedDepartureStation = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ChooseDepartureStation(),
+                    ),
+                  );
+                  setState(() {
+                    departureRouteStation = selectedDepartureStation;
+                  });
+                }),
                 borderRadius: BorderRadius.circular(16.0),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: ListTile(
                     mouseCursor: SystemMouseCursors.click,
-                    leading: Icon(
-                      Icons.adjust,
-                      color: Theme.of(context).colorScheme.primary,
+                    leading: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Icon(
+                          Icons.adjust,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ],
                     ),
-                    title: const Text(
-                      'Choose Departure Station',
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
+                    title: (departureRouteStation != null
+                        ? Text(
+                            departureRouteStation!.name,
+                            style: TextStyle(
+                              color: Theme.of(context).highlightColor,
+                            ),
+                          )
+                        : const Text(
+                            'Choose Departure Station',
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          )),
                   ),
                 ),
               ),
@@ -88,13 +125,13 @@ class HomePageBody extends StatelessWidget {
             ),
             MaterialButton(
               elevation: 0,
-              child: const Padding(
-                padding: EdgeInsets.all(16.0),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
                 child: Text(
                   'Get Route and Fare',
                   style: TextStyle(
                     fontSize: 18,
-                    color: Colors.white,
+                    color: Theme.of(context).backgroundColor,
                   ),
                 ),
               ),
@@ -128,52 +165,11 @@ class HomePageBody extends StatelessWidget {
                 childAspectRatio: 1,
                 mainAxisSpacing: 28.0,
                 crossAxisSpacing: 28.0,
-                children: [
-                  const StationsButton(),
-                  const RoutesButton(),
-                  InkWell(
-                    onTap: () {},
-                    child: GridTile(
-                      footer: const Padding(
-                        padding: EdgeInsets.only(
-                          bottom: 6.0,
-                          left: 10.0,
-                        ),
-                        child: Text(
-                          'Timings',
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: const DecorationImage(
-                            image: AssetImage(
-                              'assets/images/home/timing.png',
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16.0),
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.black.withOpacity(0),
-                                Colors.black.withOpacity(0.8),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const HelplinesButton(),
+                children: const [
+                  StationsButton(),
+                  RoutesButton(),
+                  TimingsButton(),
+                  HelplinesButton(),
                 ],
               ),
               const Padding(
@@ -194,91 +190,9 @@ class HomePageBody extends StatelessWidget {
                 childAspectRatio: 1,
                 mainAxisSpacing: 28.0,
                 crossAxisSpacing: 28.0,
-                children: [
-                  InkWell(
-                    onTap: () {},
-                    child: GridTile(
-                      footer: const Padding(
-                        padding: EdgeInsets.only(
-                          bottom: 6.0,
-                          left: 10.0,
-                        ),
-                        child: Text(
-                          'Cards',
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: const DecorationImage(
-                            image: AssetImage(
-                              'assets/images/home/card.png',
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16.0),
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.black.withOpacity(0),
-                                Colors.black.withOpacity(0.8),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {},
-                    child: GridTile(
-                      footer: const Padding(
-                        padding: EdgeInsets.only(
-                          bottom: 6.0,
-                          left: 10.0,
-                        ),
-                        child: Text(
-                          'Activities',
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: const DecorationImage(
-                            image: AssetImage(
-                              'assets/images/home/now-in-kolkata.png',
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16.0),
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.black.withOpacity(0),
-                                Colors.black.withOpacity(0.8),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                children: const [
+                  CardsButton(),
+                  ActivitiesButton(),
                 ],
               ),
               const InformationButton(),

@@ -1,6 +1,7 @@
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const String assetInfoPath = 'assets/lines/info.xlsx';
 
@@ -14,13 +15,21 @@ List<Color?> routeColorCodes = <Color?>[
   Colors.green[700],
 ];
 
+List<String> routeMapLinks = <String>[
+  'https://goo.gl/maps/7UsoYg5uQsGpsNfQA',
+  'https://goo.gl/maps/ctMuTAuNr3XWkMPv5',
+];
+
 late Excel excelData;
+
+late SharedPreferences prefs;
 
 Future<void> initData() async {
   ByteData data = await rootBundle.load(assetInfoPath);
   var lineInfo =
       data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
   excelData = Excel.decodeBytes(lineInfo);
+  prefs = await SharedPreferences.getInstance();
 }
 
 class RouteInfo {
@@ -59,11 +68,19 @@ class RouteStation {
   String code;
   int lineNumber;
   List<Color?> connections;
+  String area;
+  double latitude;
+  double longitude;
+  String mapLink;
   RouteStation({
     required this.name,
     required this.code,
     required this.connections,
+    required this.area,
     required this.lineNumber,
+    required this.latitude,
+    required this.longitude,
+    required this.mapLink,
   });
 }
 
@@ -97,6 +114,10 @@ List<RouteStation> getRouteStations({required int routeNumber}) {
         code: row[0]?.value,
         connections: connections,
         lineNumber: routeNumber,
+        area: row[2]?.value ?? '',
+        latitude: double.parse(row[3]?.value.toString() ?? '0'),
+        longitude: double.parse(row[4]?.value.toString() ?? '0'),
+        mapLink: row[5]?.value,
       ));
     }
   }
@@ -133,6 +154,10 @@ List<RouteStation> getStationsList() {
             code: row[0]?.value,
             connections: connections,
             lineNumber: int.parse(table.replaceAll(RegExp(r'[^0-9]'), '')),
+            area: row[2]?.value ?? '',
+            latitude: double.parse(row[3]?.value.toString() ?? '0'),
+            longitude: double.parse(row[4]?.value.toString() ?? '0'),
+            mapLink: row[5]?.value,
           ));
         }
       }
@@ -140,4 +165,24 @@ List<RouteStation> getStationsList() {
   }
 
   return stationList;
+}
+
+RouteStation getStationInformation({required String stationCode}) {
+  List<RouteStation> stationsList = getStationsList();
+
+  for (RouteStation stationInfo in stationsList) {
+    if (stationInfo.code == stationCode) {
+      return stationInfo;
+    }
+  }
+
+  return RouteStation(
+      name: '',
+      code: '',
+      connections: [],
+      area: '',
+      lineNumber: 1,
+      latitude: 0,
+      longitude: 0,
+      mapLink: '');
 }

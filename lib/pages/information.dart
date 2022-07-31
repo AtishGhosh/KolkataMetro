@@ -75,7 +75,6 @@ class InformationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 62.0,
         backgroundColor: Theme.of(context).backgroundColor,
         elevation: 0,
         title: Text(
@@ -289,8 +288,9 @@ class InformationPage extends StatelessWidget {
               }),
               mouseCursor: SystemMouseCursors.click,
               leading: setListTileIcon(
-                icon: const Icon(
+                icon: Icon(
                   Icons.brightness_medium,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
               title: Text(
@@ -332,11 +332,13 @@ class InformationPage extends StatelessWidget {
                     Uri.parse(
                       'https://mtp.indianrailways.gov.in/',
                     ),
+                    mode: LaunchMode.externalApplication,
                   )),
               mouseCursor: SystemMouseCursors.click,
               leading: setListTileIcon(
-                icon: const Icon(
+                icon: Icon(
                   Icons.web,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
               title: Text(
@@ -378,11 +380,13 @@ class InformationPage extends StatelessWidget {
                     Uri.parse(
                       'https://twitter.com/metrorailwaykol',
                     ),
+                    mode: LaunchMode.externalApplication,
                   )),
               mouseCursor: SystemMouseCursors.click,
               leading: setListTileIcon(
-                icon: const Icon(
+                icon: Icon(
                   FontAwesomeIcons.twitter,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
               title: Text(
@@ -424,11 +428,13 @@ class InformationPage extends StatelessWidget {
                     Uri.parse(
                       'https://en.wikipedia.org/wiki/Kolkata_Metro',
                     ),
+                    mode: LaunchMode.externalApplication,
                   )),
               mouseCursor: SystemMouseCursors.click,
               leading: setListTileIcon(
-                icon: const Icon(
+                icon: Icon(
                   FontAwesomeIcons.wikipediaW,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
               title: Text(

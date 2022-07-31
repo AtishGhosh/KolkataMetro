@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kolkatametro/info.dart';
+import 'package:kolkatametro/pages/stationinfo.dart';
 import 'package:kolkatametro/theme.dart';
 
 class RoutesButton extends StatelessWidget {
@@ -187,97 +188,131 @@ class _RoutePageState extends State<RoutePage> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        toolbarHeight: 62.0,
         backgroundColor: Theme.of(context).backgroundColor,
         elevation: 0,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              widget.routeName,
-              style: TextStyle(
-                color: Theme.of(context).highlightColor,
-                fontSize: 18.0,
-              ),
-            ),
-            Text(
-              'Line ${widget.routeNumber}',
-              style: TextStyle(
-                color: widget.routeColor,
-                fontSize: 16.0,
-              ),
-            ),
-          ],
+        title: Text(
+          'Line ${widget.routeNumber}',
+          style: TextStyle(
+            color: widget.routeColor,
+            fontSize: 25.0,
+          ),
         ),
         leading: getAppBarBackButton(context),
         systemOverlayStyle: getSystemOverlayStyle(context),
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 5.0,
-        ),
-        itemCount: routeList.length,
-        itemBuilder: (context, index) {
+      body: Builder(
+        builder: ((context) {
           List<Icon> connectionList = <Icon>[];
-          for (Color? connectionColor in routeList[index].connections) {
-            connectionList.add(
-              Icon(
-                Icons.brightness_1,
-                color: connectionColor,
+          List<Widget> itemBuilder = [
+            Container(
+              margin: const EdgeInsets.only(
+                bottom: 10.0,
               ),
-            );
-          }
-          return Card(
-            elevation: 0,
-            color: Theme.of(context).backgroundColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                16.0,
+              decoration: BoxDecoration(
+                color: Theme.of(context).backgroundColor,
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(
+                    20.0,
+                  ),
+                  bottomRight: Radius.circular(
+                    20.0,
+                  ),
+                ),
+              ),
+              padding: const EdgeInsets.only(
+                top: 25.0,
+                bottom: 40.0,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    widget.routeName,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 32.0,
+                      color: Theme.of(context).highlightColor,
+                    ),
+                  ),
+                ],
               ),
             ),
-            margin: const EdgeInsets.symmetric(
-              vertical: 5.0,
-              horizontal: 10.0,
-            ),
-            child: ListTile(
-              onTap: () {},
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 5.0,
-                horizontal: 20.0,
-              ),
+          ];
+          for (int index = 0; index < routeList.length; index++) {
+            for (Color? connectionColor in routeList[index].connections) {
+              connectionList.add(
+                Icon(
+                  Icons.brightness_1,
+                  color: connectionColor,
+                ),
+              );
+            }
+            itemBuilder.add(Card(
+              elevation: 0,
+              color: Theme.of(context).backgroundColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(
                   16.0,
                 ),
               ),
-              mouseCursor: SystemMouseCursors.click,
-              title: Text(
-                routeList[index].name,
-                style: TextStyle(
-                  color: Theme.of(context).highlightColor,
-                  fontSize: 18.0,
-                ),
+              margin: const EdgeInsets.symmetric(
+                vertical: 5.0,
+                horizontal: 10.0,
               ),
-              subtitle: Text(
-                routeList[index].code,
-                style: const TextStyle(
-                  color: Colors.grey,
+              child: ListTile(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => StationInformation(
+                      routeStation: getStationInformation(
+                        stationCode: routeList[index].code,
+                      ),
+                    ),
+                  ),
                 ),
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 5.0,
+                  horizontal: 20.0,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    16.0,
+                  ),
+                ),
+                mouseCursor: SystemMouseCursors.click,
+                title: Text(
+                  routeList[index].name,
+                  style: TextStyle(
+                    color: Theme.of(context).highlightColor,
+                    fontSize: 18.0,
+                  ),
+                ),
+                subtitle: Text(
+                  routeList[index].code,
+                  style: const TextStyle(
+                    color: Colors.grey,
+                  ),
+                ),
+                trailing: routeList[index].connections.isNotEmpty
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: connectionList,
+                      )
+                    : null,
               ),
-              trailing: routeList[index].connections.isNotEmpty
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: connectionList,
-                    )
-                  : null,
+            ));
+          }
+          return ListView(
+            padding: const EdgeInsets.only(
+              bottom: 5.0,
             ),
+            children: itemBuilder,
           );
-        },
+        }),
       ),
     );
   }

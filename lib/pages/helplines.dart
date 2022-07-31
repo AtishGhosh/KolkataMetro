@@ -94,11 +94,15 @@ class Helpline extends StatelessWidget {
           vertical: 5.0,
           horizontal: 20.0,
         ),
-        onTap: () => launchUrl(Uri.parse(url)),
+        onTap: () => launchUrl(
+          Uri.parse(url),
+          mode: LaunchMode.externalApplication,
+        ),
         mouseCursor: SystemMouseCursors.click,
         leading: setListTileIcon(
           icon: Icon(
             iconData,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         title: Text(
@@ -186,7 +190,6 @@ class Helplines extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        toolbarHeight: 62.0,
         backgroundColor: Theme.of(context).backgroundColor,
         elevation: 0,
         title: Text(

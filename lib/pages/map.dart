@@ -68,7 +68,6 @@ class MetroMap extends StatelessWidget {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).backgroundColor,
-        toolbarHeight: 62.0,
         elevation: 0,
         title: Text(
           'Metro Stations',
